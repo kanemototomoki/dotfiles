@@ -13,21 +13,15 @@ echo "start setup..."
 for f in .??*; do
     [ "$f" = ".git" ] && continue
     [ "$f" = ".gitconfig.local.template" ] && continue
-    [ "$f" = ".require_oh-my-zsh" ] && continue
     [ "$f" = ".gitmodules" ] && continue
 
     ln -snfv ~/dotfiles/"$f" ~/
 done
 
-[ -e ~/.gitconfig.local ] || cp ~/dotfiles/.gitconfig.local.template ~/.gitconfig.local
+# shellの設定
+[ -e ~/dotfiles/.config/starship.toml] || mkdir -p ~/.config && ln -snfv ~/dotfiles/.config/starship.toml ~/.config/
 
-# emacs set up
-if which cask >/dev/null 2>&1; then
-  echo "setup .emacs.d..."
-  cd ${THIS_DIR}/.emacs.d
-  cask upgrade
-  cask install
-fi
+[ -e ~/.gitconfig.local ] || cp ~/dotfiles/.gitconfig.local.template ~/.gitconfig.local
 
 cat << END
 
